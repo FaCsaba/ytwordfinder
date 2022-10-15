@@ -40,7 +40,7 @@ function App() {
         id='player'
         width="1000"
         height="600"
-        src={`https://www.youtube.com/embed/${videos[currentVideo].videoId}?start=${videos[currentVideo].start - 2}`}
+        src={`https://www.youtube.com/embed/${videos[currentVideo].videoId}?start=${videos[currentVideo].start - 2}&origin=${window.location.host}`}
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

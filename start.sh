@@ -3,7 +3,7 @@ be () {
 }
 
 fe () {
-    cd frontend && npm i && npm run build;
+    cd frontend && npm i && npm run build && mv dist/* /var/www/ytwordfinder;
 }
 
 be & fe

@@ -74,7 +74,12 @@ impl VideoTime {
 }
 
 pub fn search_for_word(word: String) -> Vec<VideoTime> {
-    let paths = fs::read_dir("./subtitles").unwrap();
+    let mut subtitles_dir = fs::read_dir("./subtitles");
+    if subtitles_dir.is_err() {
+        fs::create_dir("./subtitles").unwrap();
+        subtitles_dir = fs::read_dir("./subtitles");
+    }
+    let paths = subtitles_dir.unwrap();
     paths
         .map(|path| {
             let reader = BufReader::new(File::open(path.as_ref().unwrap().path()).unwrap());

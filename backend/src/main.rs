@@ -6,7 +6,7 @@ use rocket::{
     Request, Response,
 };
 
-use crate::business_layer::VideoTime;
+use crate::business_layer::VideoTimeSubtitle;
 
 mod business_layer;
 #[macro_use]
@@ -40,14 +40,9 @@ impl Fairing for Cors {
     }
 }
 
-#[get("/api/getVideos/<word>")]
-fn get_videos(word: String) -> Json<Vec<VideoTime>> {
+#[get("/api/getVideoLinks/<word>")]
+fn get_link(word: String) -> Json<Vec<VideoTimeSubtitle>> {
     Json(search_for_word(word))
-}
-
-#[get("/api/getLink/<word>")]
-fn get_link(word: String) -> Json<Vec<String>> {
-    Json(search_for_word(word).iter().map(|v| v.to_link()).collect())
 }
 
 #[post("/api/downloadSubtitle/<link>")]
@@ -66,12 +61,7 @@ fn rocket() -> _ {
         .attach(Cors)
         .mount(
             "/",
-            routes![
-                get_videos,
-                get_link,
-                download_subtitle,
-                download_subtitle_with_lang
-            ],
+            routes![get_link, download_subtitle, download_subtitle_with_lang],
         )
         .mount("/", routes![all_options])
 }
